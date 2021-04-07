@@ -4,3 +4,4 @@ spring:
       probability: 1.0
   zipkin:
     base-url: http://zipkin:9411
+    
