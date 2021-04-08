@@ -13,7 +13,9 @@ spring.cloud.gateway:
     uri: lb://happygoods
     predicates:
     - Path=/happygoods/** 
-
+    filters:
+    - RewritePath=/happygoods/(?<uri>.*), /${uri}
+    
   - id: mdgoods-test1
     uri: lb://mdgoods
     predicates:
