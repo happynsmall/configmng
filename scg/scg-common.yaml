@@ -20,66 +20,66 @@ spring.cloud.gateway:
     - Path=/mdgoods/** 
 
 ---
-spring.cloud.gateway:
-  # http timeout
-  httpclient: 
-    connect-timeout: 3000
-    response-timeout: 3000ms   # or 3s
-  
-  # default filters 
-  default-filters: 
-  # GatewayFilterFactory sample 
-  - name: PreLogger
-    args:
-      baseMessage: PRE GATEWAYFILTER FACTORY 
-      logging: true 
-  - name: PostLogger
-    args: 
-      baseMessage: POST GATEWAYFILTER FACTORY
-      logging: true 
-
-  - name: CircuitBreaker
-    args: 
-      name: defaultCB
-      fallbackUri: forward:/fallback     
-
----
-# Enable gateway Actuator: default is enabled
-# gateway endpoints: https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#recap-the-list-of-all-endpoints
-management:
-  endpoint.gateway.enabled: true
-  #endpoint.restart.enabled: true
----
-# Resilience4J configuration for Resilience4jConfig class
-# refer: https://resilience4j.readme.io/docs/circuitbreaker
-resilience4j:
-  circuitbreaker:
-    default:
-      # 최근 10개 요청 중 응답속도가 1초 초과한 비율이 70% 이상일때 Circuit Breaker OPEN
-      # 단, 5개 요청까지는 OPEN하지 않음. http timeout정책은 resilience.circuitbreaker.timeout 참조 
-      # slowCallDurationThreshold값은 http timeout시간보다 작아야 제대로 동작함. 크면, timeout이 먼저 발생하므로 의미가 없음.
-      slidingWindowType: COUNT_BASED           # default: COUNT_BASED 
-      slidingWindowSize: 10                    # default: 100
-      minimumNumberOfCalls: 5                  # default: 100
-      failureRateThreshold: 50                 # default: 50
-      waitDurationInOpenState: 30000           # default: 60000
-      slowCallDurationThreshold: 1000          # default: 60000
-      slowCallRateThreshold: 70                # default: 100
-      permittedNumberOfCallsInHalfOpenState: 5  #Circuit 상태가 HALF-OPEN일때 허용되는 요청 수. default: 10. 별로 안 중요
-
-    custom:
-      slidingWindowType: COUNT_BASED 
-      slidingWindowSize: 10
-      minimumNumberOfCalls: 5
-      failureRateThreshold: 60
-      waitDurationInOpenState: 10000
-      slowCallDurationThreshold: 2000  # slowCall* 조건에 해당되도 fallback 호출 안됨 
-      slowCallRateThreshold: 50
-  
-  #== http timeout 정책
-  # TimeLimiterConfig 없으면, spring.cloud.gateway.routes.metadata.response-timeout 적용됨
-  # metadata.response-timeout 없으면, spring.cloud.gateway.http-client.response-timeout 적용됨 
-  timeout: 
-    default: 2500
-    custom: 2000        
-    
+#spring.cloud.gateway:
+#  # http timeout
+#  httpclient: 
+#    connect-timeout: 3000
+#    response-timeout: 3000ms   # or 3s
+#  
+#  # default filters 
+#  default-filters: 
+#  # GatewayFilterFactory sample 
+#  - name: PreLogger
+#    args:
+#      baseMessage: PRE GATEWAYFILTER FACTORY 
+#      logging: true 
+#  - name: PostLogger
+#    args: 
+#      baseMessage: POST GATEWAYFILTER FACTORY
+#      logging: true 
+#
+#  - name: CircuitBreaker
+#    args: 
+#      name: defaultCB
+#      fallbackUri: forward:/fallback     
+#
+#---
+## Enable gateway Actuator: default is enabled
+## gateway endpoints: https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#recap-the-list-of-all-endpoints
+#management:
+#  endpoint.gateway.enabled: true
+#  #endpoint.restart.enabled: true
+#---
+## Resilience4J configuration for Resilience4jConfig class
+## refer: https://resilience4j.readme.io/docs/circuitbreaker
+#resilience4j:
+#  circuitbreaker:
+#    default:
+#      # 최근 10개 요청 중 응답속도가 1초 초과한 비율이 70% 이상일때 Circuit Breaker OPEN
+#      # 단, 5개 요청까지는 OPEN하지 않음. http timeout정책은 resilience.circuitbreaker.timeout 참조 
+#      # slowCallDurationThreshold값은 http timeout시간보다 작아야 제대로 동작함. 크면, timeout이 먼저 발생하므로 의미가 없음.
+#      slidingWindowType: COUNT_BASED           # default: COUNT_BASED 
+#      slidingWindowSize: 10                    # default: 100
+#      minimumNumberOfCalls: 5                  # default: 100
+#      failureRateThreshold: 50                 # default: 50
+#      waitDurationInOpenState: 30000           # default: 60000
+#      slowCallDurationThreshold: 1000          # default: 60000
+#      slowCallRateThreshold: 70                # default: 100
+#      permittedNumberOfCallsInHalfOpenState: 5  #Circuit 상태가 HALF-OPEN일때 허용되는 요청 수. default: 10. 별로 안 중요
+#
+#    custom:
+#      slidingWindowType: COUNT_BASED 
+#      slidingWindowSize: 10
+#      minimumNumberOfCalls: 5
+#      failureRateThreshold: 60
+#      waitDurationInOpenState: 10000
+#      slowCallDurationThreshold: 2000  # slowCall* 조건에 해당되도 fallback 호출 안됨 
+#      slowCallRateThreshold: 50
+#  
+#  #== http timeout 정책
+#  # TimeLimiterConfig 없으면, spring.cloud.gateway.routes.metadata.response-timeout 적용됨
+#  # metadata.response-timeout 없으면, spring.cloud.gateway.http-client.response-timeout 적용됨 
+#  timeout: 
+#    default: 2500
+#    custom: 2000        
+#    
