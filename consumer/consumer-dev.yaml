@@ -1,5 +1,0 @@
-webook: 
-  ribbon:
-    MaxAutoRetriesNextServer: 0
-    ServerListSubsetFilter:
-      size: 1    

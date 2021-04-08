@@ -1,3 +1,0 @@
-turbine:
-  cluster-name-expression: new String('default')
-  app-config: "hystrix-consumer,consumer"

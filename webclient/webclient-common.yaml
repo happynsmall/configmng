@@ -1,3 +1,0 @@
-# disable ribbon. use ReactorLoadBalancerExchangeFilterFunction
-spring.cloud:
-  loadbalancer.ribbon.enabled: false 
